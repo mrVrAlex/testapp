@@ -5,7 +5,7 @@ machine:
 dependencies:
   override:
     - docker info
-    - docker build -t alvro/test1 .
+    - docker build --pull --rm=false --no-cache -t alvro/test1 .
 
 test:
   override:
