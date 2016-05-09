@@ -1,24 +1,22 @@
 machine:
+  pre:
+    - sudo curl -L -o /usr/bin/docker 'https://s3-external-1.amazonaws.com/circle-downloads/docker-1.9.1-circleci'
+    - sudo chmod 0755 /usr/bin/docker
   services:
     - docker
 
 dependencies:
-  cache_directories:
-    - "~/docker"
   override:
     - docker info
-    - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
-    - docker build -t alvro/elasticsearch .
-    - mkdir -p ~/docker; docker save alvro/elasticsearch > ~/docker/image.tar
+    - docker build --pull --rm=false --no-cache -t alvro/test1 .
 
 test:
   override:
-    - docker run -d -p 9200:9200 alvro/elasticsearch; sleep 10
-    - curl --retry 10 --retry-delay 5 -v http://localhost:9200
+    - docker run alvro/test1
 
 deployment:
-  hub: 
+  hub:
     branch: master
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push alvro/elasticsearch
+      - docker push alvro/test1
