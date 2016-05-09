@@ -9,7 +9,7 @@ dependencies:
 
 test:
   override:
-    - docker run alvro/test1 ls -la
+    - docker run alvro/test1
 
 deployment:
   hub:
