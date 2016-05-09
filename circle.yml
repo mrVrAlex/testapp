@@ -3,17 +3,22 @@ machine:
     - docker
 
 dependencies:
+  cache_directories:
+    - "~/docker"
   override:
     - docker info
-    - docker build --pull --rm=false --no-cache -t alvro/test1 .
+    - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
+    - docker build -t alvro/elasticsearch .
+    - mkdir -p ~/docker; docker save alvro/elasticsearch > ~/docker/image.tar
 
 test:
   override:
-    - docker run alvro/test1
+    - docker run -d -p 9200:9200 alvro/elasticsearch; sleep 10
+    - curl --retry 10 --retry-delay 5 -v http://localhost:9200
 
 deployment:
-  hub:
+  hub: 
     branch: master
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push alvro/test1
+      - docker push alvro/elasticsearch
