@@ -1,0 +1,4 @@
+.idea/
+.git/
+public/media/*
+rancher-compose.exe

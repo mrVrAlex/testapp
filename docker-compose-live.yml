@@ -1,0 +1,20 @@
+app:
+  image: alpine
+  volumes:
+    - .:/var/www/current
+phpfpm:
+  image: opsway/webserver:phpfpm7-dev
+  volumes_from:
+    - app
+  volumes:
+    - ./public/media:/var/www/current/public/media
+  labels:
+      io.rancher.sidekicks: app
+nginx:
+  image: opsway/webserver:nginx
+  volumes_from:
+    - phpfpm
+  links:
+    - phpfpm
+  labels:
+      io.rancher.sidekicks: phpfpm, app

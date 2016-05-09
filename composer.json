@@ -1,0 +1,27 @@
+{
+  "name": "opsway/phpdemo",
+  "description": "Demo dockerized app",
+  "minimum-stability": "alpha",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexandr Vronskiy",
+      "email": "alvro@opsway.com"
+    }
+  ],
+  "require": {
+    "zendframework/zend-component-installer": "^0.1.0",
+    "zendframework/zend-config": "^2.6",
+    "zendframework/zend-filter": "^2.6",
+    "zendframework/zend-console": "^2.6",
+    "zendframework/zend-mvc": "dev-develop",
+    "zendframework/zend-mvc-console": "^1.1",
+    "zendframework/zend-router": "^3.0",
+    "zendframework/zend-mvc-plugin-prg": "^0.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Test\\": "modules/Test/src/"
+    }
+  }
+}

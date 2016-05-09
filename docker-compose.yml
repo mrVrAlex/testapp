@@ -1,0 +1,23 @@
+app:
+  image: test/code
+phpfpm:
+  image: opsway/webserver:phpfpm7-dev
+  volumes_from:
+    - app
+  volumes:
+    - /srv/alvro/public/media:/var/www/current/public/media
+  labels:
+      io.rancher.sidekicks: app
+nginx:
+  image: opsway/webserver:nginx
+  links:
+    - phpfpm
+  volumes_from:
+    - phpfpm
+  environment:
+    - DOMAIN=testapp.boodmo.clients.opsway.com
+    - APPLICATION_ENV=dev
+  labels:
+    io.rancher.sidekicks: phpfpm, app
+  ports:
+      - "8888:80"
