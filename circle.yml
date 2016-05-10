@@ -6,13 +6,15 @@ machine:
     - docker
 
 dependencies:
+  pre:
+    - docker-compose -f docker-compose-live.yml run phpfpm composer update
   override:
     - docker info
     - docker build --pull --rm=false --no-cache -t alvro/test1 .
 
 test:
   override:
-    - docker run alvro/test1
+    - docker run alvro/test1 ls -la
 
 deployment:
   hub:
