@@ -2,6 +2,7 @@ app:
   image: alpine
   volumes:
     - .:/var/www/current
+  command: echo hello
 phpfpm:
   image: opsway/webserver:phpfpm7-dev
   volumes_from:

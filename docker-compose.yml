@@ -1,6 +1,5 @@
 app:
   image: test/code
-  command: echo hello
 phpfpm:
   image: opsway/webserver:phpfpm7-dev
   volumes_from:
